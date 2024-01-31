@@ -1,0 +1,59 @@
+<mat-toolbar class="title">
+  <span>Lista de Peliculas por Jaham</span>
+</mat-toolbar>
+
+<span>
+  Según los requisitos para esta muestra, esta aplicación consume un servicio de películas. Puede editar los campos, con
+  excepción de Géneros y Directores, los cuales tienen cierta complejidad y no tuve tiempo de resolver. Inicialmente
+  consideré usar el almacenamiento local, pero no me pareció necesario para lo que se quería. La aplicación es
+  responsiva, pero a un nivel mínimo, ya que solo eliminé los márgenes en versiones de tableta para abajo.</span>
+
+
+<div class="tabel-box">
+  <table *ngIf="movies" mat-table [dataSource]="movies" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Codigo </th>
+      <td mat-cell *matCellDef="let element">
+        <input [(ngModel)]="element.tmdbId" name="tmdbId" id="tmdbId">
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Titulo">
+      <th mat-header-cell *matHeaderCellDef> Titulo </th>
+      <td mat-cell *matCellDef="let element">
+        <input [(ngModel)]="element.title" name="movieTitle" id="movieTitle">
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Generos">
+      <th mat-header-cell *matHeaderCellDef> Generos </th>
+      <td mat-cell *matCellDef="let element">
+        {{concatenarGeneros(element.genres)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Directores">
+      <th mat-header-cell *matHeaderCellDef> Directores </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.directors ? element.directors.join(', '): ''}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="año">
+      <th mat-header-cell *matHeaderCellDef> Año </th>
+
+      <td mat-cell *matCellDef="let element">
+        <input [(ngModel)]="element.year" name="year" id="year">
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="borrar">
+      <th mat-header-cell *matHeaderCellDef> Borrar </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="warn" (click)="delete(element)">X</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
